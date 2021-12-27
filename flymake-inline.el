@@ -280,11 +280,13 @@ in `flymake-inline-display-diagnostic-function.'"
 
 (defun flymake-inline-setup ()
   "Setup the hooks for `flymake-inline-mode'."
-  (add-hook 'post-command-hook #'flymake-inline-hide-errors nil 'local))
+  (add-hook 'post-command-hook #'flymake-inline-hide-errors nil 'local)
+  (add-hook 'post-command-hook #'flymake-inline-maybe-display nil 'local))
 
 (defun flymake-inline-teardown ()
   "Remove the hooks for `flymake-inline-mode'."
   (remove-hook 'post-command-hook #'flymake-inline-hide-errors 'local)
+  (remove-hook 'post-command-hook #'flymake-inline-maybe-display 'local)
   (dolist (ov flymake-inline--phantoms)
     (delete-overlay ov))
   (setq flymake-inline--phantoms nil))

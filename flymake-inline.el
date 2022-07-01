@@ -63,7 +63,8 @@ Return the displayed phantom."
                                        flymake-inline--phantoms)))
                   (cons (point-at-bol) (point-at-eol))))
                (str (concat
-                     (when (= pos-eol (point-max))
+                     (when (and (= pos-eol (point-max))
+                                (= pos-bol flymake-inline-last-error-point))
                        "\n")
                      flymake-inline-prefix
                      msg)))
@@ -274,9 +275,9 @@ ERRORS is a list of `flymake-error' objects."
 The diagnostic text will be rendered using the function defined
 in `flymake-inline-display-diagnostic-function.'"
   (when (and flymake-inline-mode
-             (get-char-property (point) 'flymake-diagnostic))
-    (let ((errors (get-char-property (point) 'flymake-diagnostic)))
-      (funcall #'flymake-inline-display-errors (list errors)))))
+             (flymake-diagnostics (point)))
+    (let ((errors (flymake-diagnostics (point))))
+      (funcall #'flymake-inline-display-errors errors))))
 
 (defun flymake-inline-setup ()
   "Setup the hooks for `flymake-inline-mode'."

@@ -247,7 +247,8 @@ POS defaults to point."
     ('eglot-warning 'flymake-inline-warning)
     (:error 'flymake-inline-error)
     ('error 'flymake-inline-error)
-    ('eglot-error 'flymake-inline-error)))
+    ('eglot-error 'flymake-inline-error)
+    (_ 'flymake-inline-note)))
 
 (defun flymake-inline-display-error (err)
   "Display `flymake-error' ERR inline."
